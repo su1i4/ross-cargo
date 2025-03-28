@@ -1,0 +1,28 @@
+export const Logo = ({width, height}: {width?: number, height?: number}) => {
+  return (
+    <svg
+      width={width || 87}
+      height={height || 38}
+      viewBox="0 0 87 38"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0 0C0 17.6684 14.2553 24.1425 21.4636 25.3333L42.6045 25.6581V0H0Z"
+        fill="#3D5BB0"
+      />
+      <path
+        d="M42.4431 27.6068H18.236C22.3673 34.8821 30.5009 37.567 34.0513 38H42.4431V27.6068Z"
+        fill="#EE252B"
+      />
+      <path
+        d="M44.3797 38V12.9915C79.2379 10.0034 87.4145 28.4188 86.9841 38L44.3797 38Z"
+        fill="#EE252B"
+      />
+      <path
+        d="M44.3797 10.7179V0.324782C59.614 -1.36411 67.1881 6.54985 69.0709 10.7179H44.3797Z"
+        fill="#3D5BB0"
+      />
+    </svg>
+  );
+};
