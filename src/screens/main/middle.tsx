@@ -5,7 +5,7 @@ export const Middle = () => {
     <div className="w-full">
       <p className="text-[#030115] text-[48px] font-[600] mt-14">Росскарго</p>
       <div className="grid grid-cols-2 gap-[20px] mt-14">
-        <div className="w-full relative bg-red-200 rounded-[30px] overflow-hidden h-[350px] bg-red-200">
+        <div className="w-full relative rounded-[30px] overflow-hidden h-[350px]">
           <Image
             width={500}
             height={300}

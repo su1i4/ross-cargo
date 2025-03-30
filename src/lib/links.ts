@@ -11,3 +11,21 @@ export const linksName: Record<LinkKeys, string> = {
   about: "О компании",
   blog: "Блог",
 };
+
+export const linksFooter = {
+  about: "about",
+  advantages: 'advantages',
+  blog: "blog",
+  feedbacks: 'feedbacks',
+  services: 'services',
+  news: 'news'
+} as const;
+
+export const linksFooterName: Record<keyof typeof linksFooter, string> = {
+  about: "О компании",
+  advantages: "Преимущества",
+  blog: "Блог",
+  feedbacks: "Отзывы",
+  services: "Услуги",
+  news: "Новости",
+};
