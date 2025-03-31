@@ -48,9 +48,9 @@ const BuisenessCard = ({ ...items }: any) => {
 
 export const Buiseness = () => {
   return (
-    <div className="bg-[#F8F8F8] py-14 px-8">
-      <div className="container mx-auto py-10">
-        <p className="text-[#030115] text-[48px] font-[600] mt-14">
+    <div className="bg-[#F8F8F8] py-16 px-8">
+      <div className="container mx-auto">
+        <p className="text-[#030115] text-[48px] font-[600]">
           Выгодно для бизнеса
         </p>
         <p className="text-[#4A4B4C] text-[20px] mt-2">

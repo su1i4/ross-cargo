@@ -9,15 +9,17 @@ import { Questions } from "@/screens/main/questions";
 
 export default function Home() {
   return (
-    <main className="container px-8">
+    <>
       <Header />
-      <Banner />
-      <Middle />
-      <Calculator />
-      <Questions />
-      <Feedbacks />
-      <Consultation />
-      <Map />
-    </main>
+      <main className="container px-8">
+        <Banner />
+        <Middle />
+        <Calculator />
+        <Questions />
+        <Feedbacks />
+        <Consultation />
+        <Map />
+      </main>
+    </>
   );
 }
