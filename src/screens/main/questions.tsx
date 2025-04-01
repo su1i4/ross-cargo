@@ -31,7 +31,7 @@ const AccardionData = [
 
 export const Questions = () => {
   return (
-    <div className="w-full">
+    <div className="w-full px-8">
       <p className="text-[#030115] text-[48px] font-[600] mt-14">
         Часто задаваемые вопросы
       </p>

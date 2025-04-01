@@ -43,28 +43,28 @@ const IntegrationCard = ({ index, ...items }: any) => {
   );
 };
 
-export const Integration = () => {
+export const ReverseIntegration = () => {
   return (
     <div className="py-16 bg-white px-8">
-      <div className="container mx-auto flex gap-4">
+      <div className="container mx-auto flex gap-8">
+        <div className="w-[40%]">
+          <Image
+            alt="integration"
+            src="/reverseIntegration.png"
+            width={400}
+            height={500}
+            className="w-full h-[700px] object-cover rounded-[30px]"
+          />
+        </div>
         <div className="w-[60%]">
           <p className="text-[#030115] text-[48px] font-[600]">
-            Выгодно для бизнеса
+            Быстро интегрируемся в ваш бизнес
           </p>
           <div className="flex flex-col gap-8 mt-8">
             {IntegrationData.map((item, index) => (
               <IntegrationCard key={index} index={index} {...item} />
             ))}
           </div>
-        </div>
-        <div className="w-[40%]">
-          <Image
-            alt="integration"
-            src="/integration.png"
-            width={400}
-            height={500}
-            className="w-full h-[700px] object-cover rounded-[30px]"
-          />
         </div>
       </div>
     </div>
