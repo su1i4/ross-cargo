@@ -34,13 +34,15 @@ const BuisenessCard = ({ ...items }: any) => {
       <p className="text-[#878787]">{items.content}</p>
       <div className="mt-4 flex justify-between items-center">
         <p className="text-[#1342DD]">Оформить заявку</p>
-        <Image
-          width={30}
-          height={30}
-          src="/arrow-up-right copy.svg"
-          alt="arrow"
-          priority={true}
-        />
+        <div className="rounded-full hover:scale-105 transition-all duration-300 hover:bg-gray-100 cursor-pointer">
+          <Image
+            width={30}
+            height={30}
+            src="/arrow-up-right copy.svg"
+            alt="arrow"
+            priority={true}
+          />
+        </div>
       </div>
     </div>
   );

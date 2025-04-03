@@ -7,6 +7,7 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/ui/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/screens/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/news/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {

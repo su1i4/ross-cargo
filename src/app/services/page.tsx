@@ -1,5 +1,6 @@
 import { Questions } from "@/screens/main/questions";
 import { Buiseness } from "@/screens/services/buiseness";
+import { China } from "@/screens/services/china";
 import { Fuck } from "@/screens/services/fuck";
 import { Fullfilment } from "@/screens/services/fullfillment";
 import { Integration } from "@/screens/services/integration";
@@ -20,6 +21,7 @@ export default function Services() {
       </div>
       <Fullfilment />
       <ReverseIntegration />
+      <China />
     </main>
   );
 }
