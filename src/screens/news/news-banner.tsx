@@ -1,35 +1,50 @@
 import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
+import clsx from "clsx";
 import Image from "next/image";
 
 export const NewsBanner = () => {
   return (
-    <div className="w-full h-[100vh] relative">
-      <Image
-        alt="asd"
-        src="/service-banner.png"
-        width={1400}
-        height={900}
-        className="w-full h-full object-cover"
-      />
-      {/* <Header /> */}
-      <div className="absolute inset-0 bg-[#41414138]">
-        <div className="container">
-          <Header textColor="text-white" />
-          <div className="flex items-center gap-2 px-8 mt-20 text-white">
-            <p>Главная</p>/<p>Услуги</p>
-          </div>
-          <div className="w-full flex flex-col items-center mt-20 gap-4">
-            <p className="text-white text-[70px] font-[600]">
-              Доставка из Кыргызстана
+    <div className="w-full h-[100vh] relative bg-white">
+      <div className="container">
+        <Header />
+        <div className="flex flex-col gap-2 px-8 mt-14 text-black">
+          <p className="space-x-1">
+            <span>Главная</span>
+            <span>/</span>
+            <span>Новости</span>
+          </p>
+          <p className="text-black mt-4">10 марта 2025</p>
+          <div className="w-full flex justify-between mt-8">
+            <p className="text-[#030115] text-[48px] font-[600] w-[60%] leading-12">
+              {"«Росскарго» открывает \n новый склад в Китае!"
+                .split("\n")
+                .map((line, lineIndex) => (
+                  <span key={`line-${lineIndex}`} className="block">
+                    {line.split("").map((char, charIndex) => (
+                      <span
+                        key={`char-${lineIndex}-${charIndex}`}
+                        className={clsx("animated-char", {
+                          "mr-2": char === " ",
+                        })}
+                        style={{
+                          animationDelay: `${
+                            (lineIndex * 10 + charIndex) * 0.03
+                          }s`,
+                        }}
+                      >
+                        {char}
+                      </span>
+                    ))}
+                  </span>
+                ))}
             </p>
-            <p className="text-white text-[25px] text-center max-w-[60%] font-[500]">
-              Оперативная перевозка грузов из Кыргызстана. Гарантируем
-              безопасность, оптимальные сроки и прозрачность на каждом этапе
+            <p className="text-[#878787] text-[18px] !w-[40%]">
+              более 17 лет успешной работы в сфере логистики. Мы осуществляем
+              доставку грузов из Кыргызстана и Китая, по всем городам России и
+              обеспечиваем полный цикл услуг, включая фулфилмент и комплекс
+              услуг по доставке
             </p>
-            <Button className="bg-[#1342DD] hover:bg-[#1342DD]">
-              Рассчитать стоимость
-            </Button>
           </div>
         </div>
       </div>
