@@ -1,7 +1,5 @@
 import { Header } from "@/components/header";
-import { Button } from "@/components/ui/button";
 import clsx from "clsx";
-import Image from "next/image";
 
 export const NewsBanner = () => {
   return (

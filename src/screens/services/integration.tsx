@@ -31,14 +31,22 @@ const IntegrationData = [
   },
 ];
 
-const IntegrationCard = ({ index, ...items }: any) => {
+type IntegrationItem = {
+  icon: React.ReactNode;
+  name: string;
+  content: string;
+};
+
+type IntegrationCardProps = IntegrationItem & { index: number };
+
+const IntegrationCard = ({ index, icon, name, content }: IntegrationCardProps) => {
   return (
     <div key={index} className="">
       <div className="flex items-center gap-2">
-        <div className="min-w-[60px]">{items.icon}</div>
-        <p className="text-[#030115] text-[25px] font-[600]">{items.name}</p>
+        <div className="min-w-[60px]">{icon}</div>
+        <p className="text-[#030115] text-[25px] font-[600]">{name}</p>
       </div>
-      <p className="text-[#878787] ml-[70px]">{items.content}</p>
+      <p className="text-[#878787] ml-[70px]">{content}</p>
     </div>
   );
 };

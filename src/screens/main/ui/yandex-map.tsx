@@ -2,18 +2,22 @@
 
 import React, { useEffect, useRef } from "react";
 
-// Define a type for the ymaps global
+interface YMaps {
+  Map: any;
+  Placemark: any;
+  ready: (callback: () => void) => void;
+}
+
 declare global {
   interface Window {
-    ymaps: any;
+    ymaps: YMaps;
   }
 }
 
 const YandexMap = () => {
   // Create a ref to store the script element for proper cleanup
   const scriptRef = useRef<HTMLScriptElement | null>(null);
-  
-  // URL for custom marker
+
   const customMarkerURL = "data:image/svg+xml;base64," + btoa(`
     <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M24 0C14.6 0 7 7.6 7 17C7 29.8 24 48 24 48C24 48 41 29.8 41 17C41 7.6 33.4 0 24 0ZM24 23C20.7 23 18 20.3 18 17C18 13.7 20.7 11 24 11C27.3 11 30 13.7 30 17C30 20.3 27.3 23 24 23Z" fill="#B30000"/>
@@ -61,13 +65,12 @@ const YandexMap = () => {
 
     document.body.appendChild(yandexScript);
 
-    // Cleanup function
     return () => {
       if (scriptRef.current && document.body.contains(scriptRef.current)) {
         document.body.removeChild(scriptRef.current);
       }
     };
-  }, []);
+  }, [customMarkerURL]);
 
   return (
     <div className="w-full h-[700px] sm:h-[600px] xs:h-[450px] relative">

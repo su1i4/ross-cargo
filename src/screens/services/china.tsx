@@ -24,7 +24,7 @@ const ChinaData = [
   },
 ];
 
-const ChinaCard = ({ ...items }: any) => {
+const ChinaCard = ({ ...items }) => {
   return (
     <div key={items.key} className="w-full bg-white rounded-[30px] p-[30px]">
       <div>{items.icon}</div>

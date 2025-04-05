@@ -1,22 +1,28 @@
 import { libNews } from "@/lib/news";
 import Image from "next/image";
 
-const NewsCard = ({ ...items }: any) => {
+type NewsItem = {
+  icon: string;
+  name: string;
+  content: string;
+};
+
+const NewsCard = ({ icon, name, content }: NewsItem) => {
   return (
-    <div key={items.key} className="w-full bg-white rounded-[30px] p-[10px]">
+    <div className="w-full bg-white rounded-[30px] p-[10px]">
       <div>
         <Image
-          alt={items.name}
-          src={items.icon}
+          alt={name}
+          src={icon}
           width={500}
           height={300}
-          className="w-full "
+          className="w-full"
         />
       </div>
       <p className="text-[#030115] text-[25px] leading-7 font-[600] h-24 mt-4">
-        {items.name}
+        {name}
       </p>
-      <p className="text-[#878787]">{items.content}</p>
+      <p className="text-[#878787]">{content}</p>
       <div className="mt-4 flex justify-between items-center">
         <p className="text-[#1342DD]">Оформить заявку</p>
         <div className="rounded-full hover:scale-105 transition-all duration-300 hover:bg-gray-100 cursor-pointer">

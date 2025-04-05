@@ -2,8 +2,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Rating from "@/components/ui/rating";
 
@@ -46,7 +44,15 @@ const FeedbackData = [
   },
 ];
 
-const FeedbackCard = ({ rate, person, feedback }: any) => {
+const FeedbackCard = ({
+  rate,
+  person,
+  feedback,
+}: {
+  rate: number;
+  person: string;
+  feedback: string;
+}) => {
   return (
     <div className="w-full h-[300px] gap-8 flex flex-col justify-between rounded-[30px] bg-[#F8F8F8] p-[30px]">
       <Rating rating={rate} />

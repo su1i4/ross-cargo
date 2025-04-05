@@ -24,7 +24,7 @@ const BuisenessData = [
   },
 ];
 
-const BuisenessCard = ({ ...items }: any) => {
+const BuisenessCard = ({ ...items }) => {
   return (
     <div key={items.key} className="w-full bg-white rounded-[30px] p-[30px]">
       <div>{items.icon}</div>

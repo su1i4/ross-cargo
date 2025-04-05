@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Select } from "@/components/ui/select";
+// import { Select } from "@/components/ui/select";
 
 // Определение типов для формы
 type CalculateFormInputs = {
@@ -28,7 +28,7 @@ export const CalculateTarifForm = () => {
     setIsCalculating(true);
     
     try {
-      // Симуляция запроса API для расчета стоимости
+      console.log(data)
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Пример расчета - в реальном приложении здесь будет запрос к API
