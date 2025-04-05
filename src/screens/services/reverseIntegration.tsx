@@ -32,18 +32,13 @@ const IntegrationData = [
   },
 ];
 
-
 type IntegrationItem = {
   icon: ReactElement;
   name: string;
   content: string;
 };
 
-type IntegrationCardProps = {
-  index: number;
-} & IntegrationItem;
-
-const IntegrationCard = ({ index, icon, name, content }: IntegrationCardProps) => {
+const IntegrationCard = ({ icon, name, content }: IntegrationItem) => {
   return (
     <div className="">
       <div className="flex items-center gap-2">
@@ -74,7 +69,7 @@ export const ReverseIntegration = () => {
           </p>
           <div className="flex flex-col gap-8 mt-8">
             {IntegrationData.map((item, index) => (
-              <IntegrationCard key={index} index={index} {...item} />
+              <IntegrationCard key={index} {...item} />
             ))}
           </div>
         </div>
