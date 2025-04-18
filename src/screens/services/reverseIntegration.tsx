@@ -40,12 +40,14 @@ type IntegrationItem = {
 
 const IntegrationCard = ({ icon, name, content }: IntegrationItem) => {
   return (
-    <div className="">
-      <div className="flex items-center gap-2">
+    <div>
+      <div className="flex items-center gap-4 sm:gap-6">
         <div className="min-w-[60px]">{icon}</div>
-        <p className="text-[#030115] text-[25px] font-[600]">{name}</p>
+        <p className="text-[#030115] text-[20px] sm:text-[25px] font-[600]">{name}</p>
       </div>
-      <p className="text-[#878787] ml-[70px]">{content}</p>
+      <p className="text-[#878787] ml-[70px] sm:ml-[80px] mt-2 sm:mt-4 text-sm sm:text-base">
+        {content}
+      </p>
     </div>
   );
 };
@@ -53,21 +55,21 @@ const IntegrationCard = ({ icon, name, content }: IntegrationItem) => {
 export const ReverseIntegration = () => {
   return (
     <div className="py-16 bg-white px-8">
-      <div className="container mx-auto flex gap-8">
-        <div className="w-[40%]">
+      <div className="container mx-auto flex flex-col sm:flex-row gap-8">
+        <div className="w-full sm:w-[40%]">
           <Image
             alt="integration"
             src="/reverseIntegration.png"
             width={400}
             height={500}
-            className="w-full h-[700px] object-cover rounded-[30px]"
+            className="w-full h-[300px] sm:h-[500px] object-cover rounded-[30px]"
           />
         </div>
-        <div className="w-[60%]">
-          <p className="text-[#030115] text-[48px] font-[600]">
+        <div className="w-full sm:w-[60%]">
+          <p className="text-[#030115] text-[32px] sm:text-[48px] font-[600] text-center sm:text-left">
             Быстро интегрируемся в ваш бизнес
           </p>
-          <div className="flex flex-col gap-8 mt-8">
+          <div className="flex flex-col gap-6 sm:gap-8 mt-8">
             {IntegrationData.map((item, index) => (
               <IntegrationCard key={index} {...item} />
             ))}

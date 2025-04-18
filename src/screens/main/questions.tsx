@@ -31,15 +31,19 @@ const AccardionData = [
 
 export const Questions = () => {
   return (
-    <div className="w-full px-8">
-      <p className="text-[#030115] text-[48px] font-[600] mt-14">
+    <div className="w-full px-4 sm:px-6 md:px-10 lg:px-20 xl:px-40 py-14">
+      <p className="text-[#030115] text-[28px] sm:text-[32px] md:text-[36px] lg:text-[42px] xl:text-[48px] font-[600] mb-10 text-center sm:text-left">
         Часто задаваемые вопросы
       </p>
       <Accordion type="single" collapsible>
-        {AccardionData.map((item) => (
-          <AccordionItem key={item.title} value="item-1">
-            <AccordionTrigger>{item.title}</AccordionTrigger>
-            <AccordionContent>{item.content}</AccordionContent>
+        {AccardionData.map((item, index) => (
+          <AccordionItem key={item.title} value={`item-${index}`}>
+            <AccordionTrigger className="text-base sm:text-lg md:text-xl font-medium">
+              {item.title}
+            </AccordionTrigger>
+            <AccordionContent className="text-sm sm:text-base text-gray-700">
+              {item.content}
+            </AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>

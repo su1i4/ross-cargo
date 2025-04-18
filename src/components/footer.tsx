@@ -4,59 +4,62 @@ import { MdOutlineEmail } from "react-icons/md";
 import { BsGeoAlt } from "react-icons/bs";
 import { FiPhone } from "react-icons/fi";
 
-const Socials = [
+const contacts = [
   {
-    icon: <MdOutlineEmail />,
-    name: "Электронная почта",
-    content: "rosscargo.kg@gmail.com",
+    icon: <MdOutlineEmail size={24} />,
+    label: "Электронная почта",
+    value: "rosscargo.kg@gmail.com",
   },
   {
-    icon: <BsGeoAlt />,
-    name: "Главный офис",
-    content: "г. Бишкек ул. Кожевенная 74/2",
+    icon: <BsGeoAlt size={24} />,
+    label: "Главный офис",
+    value: "г. Бишкек ул. Кожевенная 74/2",
   },
   {
-    icon: <FiPhone />,
-    name: "Телефон",
-    content: "+996 509-003-003",
+    icon: <FiPhone size={24} />,
+    label: "Телефон",
+    value: "+996 509-003-003",
   },
 ];
 
 export const Footer = () => {
   return (
-    <div className="container flex justify-between px-8 py-20">
-      <div className="w-[60%]">
-        <p className="text-[#030115] text-[48px] font-[600]">Росскарго</p>
-        <p className="text-[#030115]">
-          Мы всегда готовы ответить на ваши вопросы <br /> и помочь вам с
-          грузоперевозками
+    <footer className="container px-8 py-20 flex flex-col md:flex-row justify-between gap-10">
+      <div className="md:w-[60%]">
+        <h2 className="text-[#030115] text-[40px] md:text-[48px] font-semibold mb-4">
+          Росскарго
+        </h2>
+        <p className="text-[#030115] mb-10 leading-relaxed">
+          Мы всегда готовы ответить на ваши вопросы <br className="hidden md:block" />
+          и помочь вам с грузоперевозками
         </p>
-        <div className="flex gap-[20px] mt-20 items-center">
-          <Logo />{" "}
+        <div className="flex flex-wrap items-center gap-6">
+          <Logo />
           {Object.entries(linksFooter).map(([key, value]) => (
             <a
-              href={value}
               key={key}
-              className="text-[#030115] text-[18px] hover:text-[#1342DD]"
+              href={value}
+              className="text-[#030115] text-[16px] hover:text-[#1342DD] transition-colors"
             >
               {linksFooterName[key as keyof typeof linksFooterName]}
             </a>
           ))}
         </div>
       </div>
-      <div className="w-[40%] flex flex-col gap-[20px]">
-        {Socials.map((item, index) => (
+
+      <div className="md:w-[40%] flex flex-col gap-6">
+        {contacts.map((contact, index) => (
           <div key={index} className="flex flex-col">
-            <div className="flex gap-[8px] items-center">
-              {item.icon}{" "}
-              <p className="text-[#030115] text-[25px] font-[600]">
-                {item.name}
-              </p>
+            <div className="flex items-center gap-2 mb-1">
+              {contact.icon}
+              <span className="text-[#030115] text-[20px] md:text-[25px] font-semibold">
+                {contact.label}
+              </span>
             </div>
-            <p className="text-[#030115]">{item.content}</p>
+            <p className="text-[#030115] text-[16px]">{contact.value}</p>
           </div>
         ))}
       </div>
-    </div>
+    </footer>
   );
 };

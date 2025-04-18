@@ -24,7 +24,7 @@ const IntegrationData = [
       "С нами ваш бизнес получит мощный старт за счет оперативной интеграции и внедрения инноваций",
   },
   {
-    icon: <Image src={Star} alt="Shield" width={50} height={50} />,
+    icon: <Image src={Star} alt="Star" width={50} height={50} />,
     name: "Максимальная скорость и минимальные усилия для вашего успеха",
     content:
       "Мы понимаем, как важна скорость в бизнесе, поэтому предлагаем решения, которые интегрируются быстро и эффективно",
@@ -41,7 +41,7 @@ type IntegrationCardProps = IntegrationItem & { index: number };
 
 const IntegrationCard = ({ index, icon, name, content }: IntegrationCardProps) => {
   return (
-    <div key={index} className="">
+    <div key={index} className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
         <div className="min-w-[60px]">{icon}</div>
         <p className="text-[#030115] text-[25px] font-[600]">{name}</p>
@@ -54,9 +54,9 @@ const IntegrationCard = ({ index, icon, name, content }: IntegrationCardProps) =
 export const Integration = () => {
   return (
     <div className="py-16 bg-white px-8">
-      <div className="container mx-auto flex gap-4">
-        <div className="w-[60%]">
-          <p className="text-[#030115] text-[48px] font-[600]">
+      <div className="container mx-auto flex flex-col lg:flex-row gap-4">
+        <div className="lg:w-[60%] w-full">
+          <p className="text-[#030115] text-[48px] font-[600] sm:text-[36px] md:text-[40px]">
             Выгодно для бизнеса
           </p>
           <div className="flex flex-col gap-8 mt-8">
@@ -65,13 +65,13 @@ export const Integration = () => {
             ))}
           </div>
         </div>
-        <div className="w-[40%]">
+        <div className="lg:w-[40%] w-full mt-8 lg:mt-0">
           <Image
             alt="integration"
             src="/integration.png"
             width={400}
             height={500}
-            className="w-full h-[700px] object-cover rounded-[30px]"
+            className="w-full h-auto object-cover rounded-[30px]"
           />
         </div>
       </div>

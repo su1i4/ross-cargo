@@ -1,7 +1,7 @@
 export const Fuck = () => {
   return (
     <div className="py-14 bg-white">
-      <p className="container text-[#030115] text-[30px] px-8">
+      <p className="container text-[#030115] text-[30px] px-8 sm:text-[14px] md:text-[20px] lg:text-[30px]">
         Наши логистические решения включают отслеживание грузов в реальном
         времени, контроль технического состояния для предотвращения простоев,
         оптимизацию складских процессов и эффективную логистику, снижая затраты

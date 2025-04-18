@@ -13,12 +13,12 @@ export default function Home() {
       <Header />
       <main className="container px-8">
         <Banner />
-        <Middle />
-        <Calculator />
-        <Questions />
-        <Feedbacks />
-        <Consultation />
-        <Map />
+          <Middle />
+          {/* <Calculator /> */}
+          <Questions />
+          <Feedbacks />
+          <Consultation />
+          <Map />
       </main>
     </>
   );

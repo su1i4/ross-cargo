@@ -52,7 +52,7 @@ export const China = () => {
   return (
     <div className="bg-[#F8F8F8] py-16 px-8">
       <div className="container mx-auto">
-        <div className="flex justify-between">
+        <div className="flex flex-col md:flex-row justify-between">
           <div className="flex flex-col gap-2">
             <p className="text-[#030115] text-[48px] font-[600]">
               Доставка из Китая
@@ -68,10 +68,10 @@ export const China = () => {
             alt="flag-china svg"
             width={200}
             height={200}
-            className=""
+            className="mt-6 md:mt-0"
           />
         </div>
-        <div className="grid grid-cols-3 gap-[30px] mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] mt-10">
           {ChinaData.map((item, index) => (
             <ChinaCard key={index} {...item} />
           ))}
