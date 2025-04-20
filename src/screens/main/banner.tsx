@@ -31,9 +31,14 @@ export const Banner = () => {
           доставке
         </p>
       </div>
-      <div className="w-full mt-6 md:mt-10 lg:mt-14">
-        <Slider />
-      </div>
+      <video
+        className=" w-full h-[60vh] object-cover z-0 mt-4 rounded-3xl"
+        src="/5598972-uhd_3840_2160_30fps.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
     </>
   );
 };

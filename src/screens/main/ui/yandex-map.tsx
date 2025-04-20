@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useEffect, useRef } from "react";
 
@@ -18,6 +18,23 @@ const YandexMap = () => {
   const scriptRef = useRef<HTMLScriptElement | null>(null);
 
   const customMarkerURL = useRef(
+    "data:image/svg+xml;base64," +
+      btoa(`
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 0C14.6 0 7 7.6 7 17C7 29.8 24 48 24 48C24 48 41 29.8 41 17C41 7.6 33.4 0 24 0ZM24 23C20.7 23 18 20.3 18 17C18 13.7 20.7 11 24 11C27.3 11 30 13.7 30 17C30 20.3 27.3 23 24 23Z" fill="#B30000"/>
+        </svg>
+      `)
+  );
+
+  const customMarkerURLSecond = useRef(
+    "data:image/svg+xml;base64," +
+      btoa(`
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 0C14.6 0 7 7.6 7 17C7 29.8 24 48 24 48C24 48 41 29.8 41 17C41 7.6 33.4 0 24 0ZM24 23C20.7 23 18 20.3 18 17C18 13.7 20.7 11 24 11C27.3 11 30 13.7 30 17C30 20.3 27.3 23 24 23Z" fill="#B30000"/>
+        </svg>
+      `)
+  );
+  const customMarkerURLThird = useRef(
     "data:image/svg+xml;base64," +
       btoa(`
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,15 +73,43 @@ const YandexMap = () => {
   const initMap = () => {
     const map = new window.ymaps.Map("yandex-map", {
       center: [42.875652, 74.622943],
-      zoom: 16,
+      zoom: 12,
       controls: [],
     });
 
     const placemark = new window.ymaps.Placemark(
-      [42.875652, 74.622943],
+      [42.943066, 74.620625],
       {
-        hintContent: "Prestige Tower",
-        balloonContent: "бизнес-центр Prestige Tower",
+        hintContent: "Кожевенная улица, 74Б",
+        balloonContent: "Кожевенная улица, 74Б",
+      },
+      {
+        iconLayout: "default#image",
+        iconImageHref: customMarkerURL.current,
+        iconImageSize: [48, 48],
+        iconImageOffset: [-24, -48],
+      }
+    );
+
+    const placemarksecond = new window.ymaps.Placemark(
+      [42.875408, 74.685079],
+      {
+        hintContent: "Микрорайон Аламедин-1, 50/1",
+        balloonContent: "Микрорайон Аламедин-1, 50/1",
+      },
+      {
+        iconLayout: "default#image",
+        iconImageHref: customMarkerURL.current,
+        iconImageSize: [48, 48],
+        iconImageOffset: [-24, -48],
+      }
+    );
+
+    const placemarkthird = new window.ymaps.Placemark(
+      [42.870063, 74.638062],
+      {
+        hintContent: "Улица Менделеева, 132",
+        balloonContent: "Улица Менделеева, 132",
       },
       {
         iconLayout: "default#image",
@@ -75,6 +120,8 @@ const YandexMap = () => {
     );
 
     map.geoObjects.add(placemark);
+    map.geoObjects.add(placemarksecond);
+    map.geoObjects.add(placemarkthird);
   };
 
   return (

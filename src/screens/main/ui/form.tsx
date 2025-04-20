@@ -6,17 +6,19 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
+import emailjs from "emailjs-com";
+
 // Define form input types
 type FormInputs = {
   name: string;
-  phone: string;
+  phoneNumber: string;
   message: string;
 };
 
 export const Form = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  
+
   const {
     register,
     handleSubmit,
@@ -26,22 +28,24 @@ export const Form = () => {
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     setIsSubmitting(true);
-    
+
     try {
-      // Replace with your actual form submission logic
-      // For example: await fetch('/api/contact', { method: 'POST', body: JSON.stringify(data) });
-      console.log("Form data:", data);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await emailjs.send(
+        "service_2vwrg5c", // service_id
+        "template_b0n6l65", // template_id
+        {
+          name: data.name,
+          phoneNumber: data.phoneNumber,
+          message: data.message,
+        },
+        "Sm_XBc9mi94plAWkQ" // public_key
+      );
+
       setIsSuccess(true);
       reset();
-      
-      // Reset success message after 3 seconds
       setTimeout(() => setIsSuccess(false), 3000);
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Ошибка при отправке:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -59,31 +63,32 @@ export const Form = () => {
           <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
         )}
       </div>
-      
+
       <div>
         <Input
           placeholder="Номер телефона"
-          {...register("phone", { 
+          {...register("phoneNumber", {
             required: "Номер телефона обязателен",
-            pattern: {
-              value: /^(\+7|8)[\s-]?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/,
-              message: "Введите действительный номер телефона"
-            }
+            // pattern: {
+            //   // value:
+            //   //   /^(\+7|8)[\s-]?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/,
+            //   message: "Введите действительный номер телефона",
+            // },
           })}
-          className={errors.phone ? "border-red-500" : ""}
+          className={errors.phoneNumber ? "border-red-500" : ""}
         />
-        {errors.phone && (
-          <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+        {errors.phoneNumber && (
+          <p className="text-red-500 text-sm mt-1">{errors.phoneNumber.message}</p>
         )}
       </div>
-      
+
       <div>
         <Textarea
           placeholder="Опишите задачу"
           rows={5}
-          {...register("message", { 
-            required: "Описание задачи обязательно", 
-            minLength: { value: 10, message: "Минимум 10 символов" } 
+          {...register("message", {
+            required: "Описание задачи обязательно",
+            minLength: { value: 10, message: "Минимум 10 символов" },
           })}
           className={errors.message ? "border-red-500" : ""}
         />
@@ -91,17 +96,19 @@ export const Form = () => {
           <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>
         )}
       </div>
-      
-      <Button 
-        type="submit" 
+
+      <Button
+        type="submit"
         disabled={isSubmitting}
         className="w-fit bg-[#1342DD] hover:bg-[#1342DD]"
       >
         {isSubmitting ? "Отправка..." : "Рассчитать стоимость"}
       </Button>
-      
+
       {isSuccess && (
-        <p className="text-green-500 text-center">Сообщение успешно отправлено!</p>
+        <p className="text-green-500 text-center">
+          Сообщение успешно отправлено!
+        </p>
       )}
     </form>
   );

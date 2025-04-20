@@ -11,14 +11,14 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="container px-8">
+      <main className="container md:px-8 px-2">
         <Banner />
-          <Middle />
-          {/* <Calculator /> */}
-          <Questions />
-          <Feedbacks />
-          <Consultation />
-          <Map />
+        <Middle />
+        <Calculator />
+        <Questions />
+        <Feedbacks />
+        <Consultation />
+        <Map />
       </main>
     </>
   );

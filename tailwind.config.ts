@@ -17,7 +17,7 @@ export default {
       screens: {
         xl: { max: "1279px" },
         ml: { max: "1060px" },
-        lg: { max: "960px" },
+        lg: { min: "960px" },
         md: { max: "768px" },
         sm: { max: "640px" },
         xs: { max: "450px" },
