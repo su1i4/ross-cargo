@@ -32,12 +32,15 @@ export const Banner = () => {
         </p>
       </div>
       <video
-        className=" w-full h-[60vh] object-cover z-0 mt-4 rounded-3xl"
+        className="w-full h-[60vh] object-cover z-0 mt-4 rounded-3xl"
         src="/5598972-uhd_3840_2160_30fps.mp4"
         autoPlay
         muted
         loop
         playsInline
+        title="Логистические услуги РоссКарго"
+        poster="/video-preview.jpg"
+        aria-label="Видео о процессе доставки грузов компанией Росскарго"
       />
     </>
   );

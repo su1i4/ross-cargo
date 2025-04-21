@@ -1,6 +1,7 @@
 import { Header } from "@/components/header";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export const ServiceBanner = () => {
   return (
@@ -27,13 +28,15 @@ export const ServiceBanner = () => {
             </h1>
 
             <p className="text-white text-[18px] sm:text-[20px] md:text-[25px] max-w-[90%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[50%] font-medium">
-              Оперативная перевозка грузов из Кыргызстана. Гарантируем безопасность,
-              оптимальные сроки и прозрачность на каждом этапе
+              Оперативная перевозка грузов из Кыргызстана. Гарантируем
+              безопасность, оптимальные сроки и прозрачность на каждом этапе
             </p>
 
-            <Button className="bg-[#1342DD] hover:bg-[#1036b3] transition-colors">
-              Рассчитать стоимость
-            </Button>
+            <Link href="/?link=leave-a-request">
+              <Button className="bg-[#1342DD] hover:bg-[#1036b3] transition-colors">
+                Рассчитать стоимость
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

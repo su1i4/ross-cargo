@@ -4,7 +4,10 @@ import Image from "next/image";
 
 export const Consultation = () => {
   return (
-    <div className="bg-[#F8F8F8] rounded-[30px] p-6 sm:p-8 lg:p-[30px] grid grid-cols-1 lg:grid-cols-2 mt-14 gap-6 lg:gap-[30px]">
+    <div
+      id="leave-a-request"
+      className="bg-[#F8F8F8] rounded-[30px] p-6 sm:p-8 lg:p-[30px] grid grid-cols-1 lg:grid-cols-2 mt-14 gap-6 lg:gap-[30px]"
+    >
       <div className="flex flex-col gap-4 sm:gap-5">
         <p className="text-[#030115] text-[22px] sm:text-[26px] lg:text-[28px] font-[600]">
           Получите консультацию по логистике

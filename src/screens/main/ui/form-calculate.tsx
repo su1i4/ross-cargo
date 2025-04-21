@@ -12,6 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSearchParams } from "next/navigation";
+import { scrollToId } from "@/lib/utils";
 
 // Type definitions
 type City = {
@@ -51,6 +53,15 @@ export const ShippingCalculator = () => {
   const [isCalculating, setIsCalculating] = useState(false);
   const [price, setPrice] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const link = searchParams.get("link");
+    if (link) {
+      setTimeout(() => scrollToId(link), 300);
+    }
+  }, [searchParams]);
 
   const {
     control,

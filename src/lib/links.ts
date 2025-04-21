@@ -16,7 +16,7 @@ export const linksFooter = {
   about: "/about",
   advantages: "/advantages",
   news: "/news",
-  feedbacks: "/eedbacks",
+  feedbacks: "/feedbacks",
   services: "/services",
 } as const;
 

@@ -71,8 +71,6 @@ export const NewsSlider = () => {
     });
   }, [api]);
 
-  console.log(count, current);
-
   return (
     <Carousel setApi={setApi}>
       <CarouselContent className="">

@@ -3,22 +3,27 @@ import { linksFooter, linksFooterName } from "@/lib/links";
 import { MdOutlineEmail } from "react-icons/md";
 import { BsGeoAlt } from "react-icons/bs";
 import { FiPhone } from "react-icons/fi";
+import Link from "next/link";
+import Script from "next/script";
 
 const contacts = [
   {
     icon: <MdOutlineEmail size={24} />,
     label: "Электронная почта",
     value: "rosscargo.kg@gmail.com",
+    href: "mailto:rosscargo.kg@gmail.com",
   },
   {
     icon: <BsGeoAlt size={24} />,
     label: "Главный офис",
     value: "г. Бишкек ул. Кожевенная 74/2",
+    href: "https://maps.google.com/?q=г. Бишкек ул. Кожевенная 74/2", // можно также использовать Yandex карты
   },
   {
     icon: <FiPhone size={24} />,
     label: "Телефон",
     value: "+996 509-003-003",
+    href: "tel:+996509003003",
   },
 ];
 
@@ -30,20 +35,29 @@ export const Footer = () => {
           Росскарго
         </h2>
         <p className="text-[#030115] mb-10 leading-relaxed">
-          Мы всегда готовы ответить на ваши вопросы <br className="hidden md:block" />
-          и помочь вам с грузоперевозками
+          Мы всегда готовы ответить на ваши вопросы{" "}
+          <br className="hidden md:block" />и помочь вам с грузоперевозками
         </p>
         <div className="flex flex-wrap items-center gap-6">
           <Logo />
-          {Object.entries(linksFooter).map(([key, value]) => (
-            <a
-              key={key}
-              href={value}
-              className="text-[#030115] text-[16px] hover:text-[#1342DD] transition-colors"
-            >
-              {linksFooterName[key as keyof typeof linksFooterName]}
-            </a>
-          ))}
+          <Link
+            href="/services"
+            className="text-[#030115] text-[16px] hover:text-[#1342DD] transition-colors"
+          >
+            Услуги
+          </Link>
+          <Link
+            href="/"
+            className="text-[#030115] text-[16px] hover:text-[#1342DD] transition-colors"
+          >
+            О компании
+          </Link>
+          <Link
+            href="/news"
+            className="text-[#030115] text-[16px] hover:text-[#1342DD] transition-colors"
+          >
+            Новости
+          </Link>
         </div>
       </div>
 
@@ -56,10 +70,52 @@ export const Footer = () => {
                 {contact.label}
               </span>
             </div>
-            <p className="text-[#030115] text-[16px]">{contact.value}</p>
+            <a
+              href={contact.href}
+              target={contact.href.startsWith("http") ? "_blank" : undefined}
+              rel={
+                contact.href.startsWith("http")
+                  ? "noopener noreferrer"
+                  : undefined
+              }
+              className="text-[#030115] text-[16px] hover:text-[#1342DD] transition-colors cursor-pointer underline"
+            >
+              {contact.value}
+            </a>
           </div>
         ))}
       </div>
+
+      {/* Schema.org разметка для компании */}
+      <Script id="schema-org-script" type="application/ld+json">{`
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "РоссКарго",
+          "url": "https://rosscargo.kg",
+          "logo": "https://rosscargo.kg/logo.png",
+          "description": "Логистическая компания, предоставляющая услуги доставки грузов из Кыргызстана и Китая в Россию. Более 17 лет опыта.",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "ул. Кожевенная 74/2",
+            "addressLocality": "Бишкек",
+            "addressCountry": "Кыргызстан"
+          },
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+996509003003",
+              "contactType": "customer service",
+              "email": "rosscargo.kg@gmail.com"
+            }
+          ],
+          "sameAs": [
+            "https://www.instagram.com/rosscargo",
+            "https://t.me/rosscargo",
+            "https://vk.com/rosscargo"
+          ]
+        }
+      `}</Script>
     </footer>
   );
 };

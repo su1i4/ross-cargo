@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface YMaps {
   Map: any;
@@ -15,129 +15,137 @@ declare global {
 }
 
 const YandexMap = () => {
-  const scriptRef = useRef<HTMLScriptElement | null>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  
+  // Define custom marker only once outside of render cycle
+  const customMarkerURL = "data:image/svg+xml;base64," +
+    btoa(`
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 0C14.6 0 7 7.6 7 17C7 29.8 24 48 24 48C24 48 41 29.8 41 17C41 7.6 33.4 0 24 0ZM24 23C20.7 23 18 20.3 18 17C18 13.7 20.7 11 24 11C27.3 11 30 13.7 30 17C30 20.3 27.3 23 24 23Z" fill="#B30000"/>
+      </svg>
+    `);
 
-  const customMarkerURL = useRef(
-    "data:image/svg+xml;base64," +
-      btoa(`
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M24 0C14.6 0 7 7.6 7 17C7 29.8 24 48 24 48C24 48 41 29.8 41 17C41 7.6 33.4 0 24 0ZM24 23C20.7 23 18 20.3 18 17C18 13.7 20.7 11 24 11C27.3 11 30 13.7 30 17C30 20.3 27.3 23 24 23Z" fill="#B30000"/>
-        </svg>
-      `)
-  );
-
-  const customMarkerURLSecond = useRef(
-    "data:image/svg+xml;base64," +
-      btoa(`
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M24 0C14.6 0 7 7.6 7 17C7 29.8 24 48 24 48C24 48 41 29.8 41 17C41 7.6 33.4 0 24 0ZM24 23C20.7 23 18 20.3 18 17C18 13.7 20.7 11 24 11C27.3 11 30 13.7 30 17C30 20.3 27.3 23 24 23Z" fill="#B30000"/>
-        </svg>
-      `)
-  );
-  const customMarkerURLThird = useRef(
-    "data:image/svg+xml;base64," +
-      btoa(`
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M24 0C14.6 0 7 7.6 7 17C7 29.8 24 48 24 48C24 48 41 29.8 41 17C41 7.6 33.4 0 24 0ZM24 23C20.7 23 18 20.3 18 17C18 13.7 20.7 11 24 11C27.3 11 30 13.7 30 17C30 20.3 27.3 23 24 23Z" fill="#B30000"/>
-        </svg>
-      `)
-  );
-
-  useEffect(() => {
-    // Prevent double loading
-    if (window.ymaps) {
-      window.ymaps.ready(initMap);
-      return;
+  // Location data
+  const locations = [
+    {
+      coordinates: [42.943066, 74.620625],
+      hint: "Кожевенная улица, 74Б",
+      balloon: "Кожевенная улица, 74Б"
+    },
+    {
+      coordinates: [42.875408, 74.685079],
+      hint: "Микрорайон Аламедин-1, 50/1",
+      balloon: "Микрорайон Аламедин-1, 50/1"
+    },
+    {
+      coordinates: [42.870063, 74.638062],
+      hint: "Улица Менделеева, 132",
+      balloon: "Улица Менделеева, 132"
     }
+  ];
 
-    const yandexScript = document.createElement("script");
-    yandexScript.src =
-      "https://api-maps.yandex.ru/2.1/?apikey=ef84f2a7-333d-4b33-b3d5-5263cb19fb71&lang=ru_RU";
-    yandexScript.type = "text/javascript";
-    yandexScript.async = true;
-
-    scriptRef.current = yandexScript;
-    document.body.appendChild(yandexScript);
-
-    yandexScript.onload = () => {
-      window.ymaps.ready(initMap);
-    };
-
-    return () => {
-      if (scriptRef.current && document.body.contains(scriptRef.current)) {
-        document.body.removeChild(scriptRef.current);
+  const loadYandexMapsScript = () => {
+    return new Promise<void>((resolve, reject) => {
+      // Check if script is already loaded
+      if (window.ymaps) {
+        setMapLoaded(true);
+        resolve();
+        return;
       }
-    };
-  }, []);
+
+      // Create script element
+      const script = document.createElement("script");
+      script.src = "https://api-maps.yandex.ru/2.1/?apikey=ef84f2a7-333d-4b33-b3d5-5263cb19fb71&lang=ru_RU";
+      script.type = "text/javascript";
+      script.async = true;
+      
+      script.onload = () => {
+        setMapLoaded(true);
+        resolve();
+      };
+      
+      script.onerror = (error) => {
+        console.error("Failed to load Yandex Maps script:", error);
+        reject(error);
+      };
+      
+      document.head.appendChild(script);
+    });
+  };
 
   const initMap = () => {
-    const map = new window.ymaps.Map("yandex-map", {
-      center: [42.875652, 74.622943],
-      zoom: 12,
-      controls: [],
+    if (!window.ymaps || !mapRef.current) return;
+
+    window.ymaps.ready(() => {
+      try {
+        // Create map
+        const map = new window.ymaps.Map(mapRef.current, {
+          center: [42.875652, 74.622943],
+          zoom: 12,
+          controls: []
+        });
+
+        // Add placemarks for each location
+        locations.forEach(location => {
+          const placemark = new window.ymaps.Placemark(
+            location.coordinates,
+            {
+              hintContent: location.hint,
+              balloonContent: location.balloon
+            },
+            {
+              iconLayout: "default#image",
+              iconImageHref: customMarkerURL,
+              iconImageSize: [48, 48],
+              iconImageOffset: [-24, -48]
+            }
+          );
+          
+          map.geoObjects.add(placemark);
+        });
+      } catch (error) {
+        console.error("Error initializing map:", error);
+      }
     });
-
-    const placemark = new window.ymaps.Placemark(
-      [42.943066, 74.620625],
-      {
-        hintContent: "Кожевенная улица, 74Б",
-        balloonContent: "Кожевенная улица, 74Б",
-      },
-      {
-        iconLayout: "default#image",
-        iconImageHref: customMarkerURL.current,
-        iconImageSize: [48, 48],
-        iconImageOffset: [-24, -48],
-      }
-    );
-
-    const placemarksecond = new window.ymaps.Placemark(
-      [42.875408, 74.685079],
-      {
-        hintContent: "Микрорайон Аламедин-1, 50/1",
-        balloonContent: "Микрорайон Аламедин-1, 50/1",
-      },
-      {
-        iconLayout: "default#image",
-        iconImageHref: customMarkerURL.current,
-        iconImageSize: [48, 48],
-        iconImageOffset: [-24, -48],
-      }
-    );
-
-    const placemarkthird = new window.ymaps.Placemark(
-      [42.870063, 74.638062],
-      {
-        hintContent: "Улица Менделеева, 132",
-        balloonContent: "Улица Менделеева, 132",
-      },
-      {
-        iconLayout: "default#image",
-        iconImageHref: customMarkerURL.current,
-        iconImageSize: [48, 48],
-        iconImageOffset: [-24, -48],
-      }
-    );
-
-    map.geoObjects.add(placemark);
-    map.geoObjects.add(placemarksecond);
-    map.geoObjects.add(placemarkthird);
   };
+
+  useEffect(() => {
+    let isMounted = true;
+    
+    const setupMap = async () => {
+      try {
+        await loadYandexMapsScript();
+        if (isMounted) {
+          initMap();
+        }
+      } catch (error) {
+        console.error("Error setting up map:", error);
+      }
+    };
+    
+    setupMap();
+    
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <div className="relative w-full h-[450px] sm:h-[600px] md:h-[700px] rounded-[20px] overflow-hidden">
       <div
+        ref={mapRef}
         id="yandex-map"
         className="w-full h-full"
         style={{
-          filter: "grayscale(0.1) brightness(1.05)",
+          filter: "grayscale(0.1) brightness(1.05)"
         }}
       />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundColor: "rgba(200, 200, 200, 0.3)",
-          mixBlendMode: "overlay",
+          mixBlendMode: "overlay"
         }}
       />
     </div>

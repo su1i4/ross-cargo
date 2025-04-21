@@ -9,7 +9,6 @@ export const Middle = () => {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-        {/* Кыргызстан */}
         <div className="group relative rounded-[20px] overflow-hidden h-[280px] sm:h-[300px] md:h-[320px] lg:h-[350px] transition-all cursor-pointer">
           <Image
             width={500}
@@ -22,7 +21,7 @@ export const Middle = () => {
           <div className="absolute inset-0 bg-black/20 flex flex-col justify-end p-4 sm:p-5 md:p-6 gap-3 sm:gap-4">
             <p
               className="text-[18px] sm:text-[20px] md:text-[22px] text-white font-[600] transform opacity-90 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 
-  absolute group-[&:hover]:relative bottom-4"
+                         absolute group-[&:hover]:relative bottom-4"
             >
               Доставка из Кыргызстана
             </p>
@@ -33,7 +32,10 @@ export const Middle = () => {
               </p>
             </div>
 
-            <Link href='/services' className="flex justify-between items-center opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 delay-100">
+            <Link
+              href="/services"
+              className="flex justify-between items-center opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 delay-100"
+            >
               <p className="text-white font-[300] text-sm sm:text-base">
                 Узнать подробнее
               </p>
@@ -69,11 +71,14 @@ export const Middle = () => {
               <p className="text-white text-sm sm:text-base font-[300]">
                 Доставляем грузы из Гуанчжоу, Иу и Урумчи в Россию безопасно и
                 выгодно. Байерство, поиск, проверка и инспекция товаров, Бизнес
-                туры в Китай. Мы работаем, чтобы ваш бизнес рост!
+                туры в Китай. Мы работаем, чтобы ваш бизнес рос!
               </p>
             </div>
 
-            <Link href='/services#china' className="flex justify-between items-center opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 delay-100">
+            <Link
+              href="/services?link=china"
+              className="flex justify-between items-center opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 delay-100"
+            >
               <p className="text-white font-[300] text-sm sm:text-base">
                 Узнать подробнее
               </p>
@@ -103,7 +108,7 @@ export const Middle = () => {
               className="text-[18px] sm:text-[20px] md:text-[22px] text-white font-[600] transform opacity-90 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 
   absolute group-[&:hover]:relative bottom-4"
             >
-              фулфилмент1
+              фулфилмент
             </p>
             <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
               <p className="text-white text-sm sm:text-base font-[300]">
@@ -113,7 +118,10 @@ export const Middle = () => {
               </p>
             </div>
 
-            <div className="flex justify-between items-center opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 delay-100">
+            <Link
+              href="/services?link=fullfilment"
+              className="flex justify-between items-center opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 delay-100"
+            >
               <p className="text-white font-[300] text-sm sm:text-base">
                 Узнать подробнее
               </p>
@@ -124,7 +132,7 @@ export const Middle = () => {
                 alt="arrow"
                 priority
               />
-            </div>
+            </Link>
           </div>
         </div>
       </div>

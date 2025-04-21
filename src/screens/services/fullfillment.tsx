@@ -2,6 +2,7 @@ import Image from "next/image";
 import Warehouse from "@/assets/icons/warehouse.svg";
 import Package from "@/assets/icons/package.svg";
 import Shield from "@/assets/icons/shield-check.svg";
+import Link from "next/link";
 
 const BuisenessData = [
   {
@@ -26,13 +27,19 @@ const BuisenessData = [
 
 const BuisenessCard = ({ ...items }) => {
   return (
-    <div key={items.key} className="w-full bg-white rounded-[30px] p-[30px] shadow-md">
+    <div
+      key={items.key}
+      className="w-full bg-white rounded-[30px] p-[30px] shadow-md"
+    >
       <div>{items.icon}</div>
       <p className="text-[#030115] text-[20px] sm:text-[25px] font-[600] h-24 mt-4">
         {items.name}
       </p>
       <p className="text-[#878787] text-sm sm:text-base">{items.content}</p>
-      <div className="mt-4 flex justify-between items-center">
+      <Link
+        href="/?link=leave-a-request"
+        className="mt-4 flex justify-between items-center"
+      >
         <p className="text-[#1342DD] text-sm sm:text-base">Оформить заявку</p>
         <div className="rounded-full hover:scale-105 transition-all duration-300 hover:bg-gray-100 cursor-pointer">
           <Image
@@ -43,14 +50,14 @@ const BuisenessCard = ({ ...items }) => {
             priority={true}
           />
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
 
 export const Fullfilment = () => {
   return (
-    <div className="bg-[#F8F8F8] py-16 px-8">
+    <div id="fullfilment" className="bg-[#F8F8F8] py-16 px-8">
       <div className="container mx-auto">
         <p className="text-[#030115] text-[32px] sm:text-[48px] font-[600] text-center sm:text-left">
           Фулфилмент

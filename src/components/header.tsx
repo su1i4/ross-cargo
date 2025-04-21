@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { links, linksName } from "@/lib/links";
 import Link from "next/link";
 import { Menu, X } from "lucide-react"; // Иконки меню
+import { scrollToId } from "@/lib/utils";
 
 export const Header = ({ textColor = "text-[#030115]" }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,7 +32,11 @@ export const Header = ({ textColor = "text-[#030115]" }) => {
         </nav>
 
         <div className="hidden lg:block">
-          <Button className="bg-[#1342DD]">Оставить заявку</Button>
+          <Link href="/?link=leave-a-request">
+            <Button className="w-full bg-[#1342DD] hover:bg-[#1342DD90] active:scale-95 transition-all duration-300 cursor-pointer">
+              Оставить заявку
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile menu toggle */}
@@ -60,7 +65,14 @@ export const Header = ({ textColor = "text-[#030115]" }) => {
           </nav>
 
           <div className="mt-4">
-            <Button className="w-full bg-[#1342DD]">Оставить заявку</Button>
+            <Link href="/?link=leave-a-reauest">
+              <Button
+                onClick={() => scrollToId("leave-a-request")}
+                className="w-full bg-[#1342DD] hover:bg-[#1342DD80] active:scale-95 transition-all duration-300 cursor"
+              >
+                Оставить заявку
+              </Button>
+            </Link>
           </div>
         </div>
       )}

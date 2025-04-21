@@ -1,4 +1,4 @@
-export const Fuck = () => {
+export const ServiceDescription = () => {
   return (
     <div className="py-14 bg-white">
       <p className="container text-[#030115] text-[30px] px-8 sm:text-[14px] md:text-[20px] lg:text-[30px]">
@@ -10,4 +10,4 @@ export const Fuck = () => {
       </p>
     </div>
   );
-};
+}; 

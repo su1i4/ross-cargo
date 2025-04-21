@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 import emailjs from "emailjs-com";
 
@@ -22,6 +24,7 @@ export const Form = () => {
   const {
     register,
     handleSubmit,
+    control,
     reset,
     formState: { errors },
   } = useForm<FormInputs>();
@@ -43,7 +46,7 @@ export const Form = () => {
 
       setIsSuccess(true);
       reset();
-      setTimeout(() => setIsSuccess(false), 3000);
+      setTimeout(() => setIsSuccess(false), 10000);
     } catch (error) {
       console.error("Ошибка при отправке:", error);
     } finally {
@@ -65,20 +68,35 @@ export const Form = () => {
       </div>
 
       <div>
-        <Input
-          placeholder="Номер телефона"
-          {...register("phoneNumber", {
-            required: "Номер телефона обязателен",
-            // pattern: {
-            //   // value:
-            //   //   /^(\+7|8)[\s-]?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/,
-            //   message: "Введите действительный номер телефона",
-            // },
-          })}
-          className={errors.phoneNumber ? "border-red-500" : ""}
+        <Controller
+          name="phoneNumber"
+          control={control}
+          rules={{ required: "Номер телефона обязателен" }}
+          render={({ field: { onChange, value } }) => (
+            <PhoneInput
+              country="kg"
+              onlyCountries={["ru", "kz", "cn", "uz", "kg"]}
+              preferredCountries={["ru", "kz", "cn", "uz", "kg"]}
+              value={value}
+              onChange={onChange}
+              inputClass={errors.phoneNumber ? "border-red-500" : ""}
+              containerClass="w-full bg-[#F0F0F0]"
+              inputStyle={{ width: "100%", backgroundColor: "#F0F0F0" }}
+              placeholder="Номер телефона"
+              masks={{
+                ru: "... ... .. ..",
+                kz: "... ... .. ..",
+                cn: "... .... ....",
+                uz: ".. ... .. ..",
+                kg: "... ... ..."
+              }}
+            />
+          )}
         />
         {errors.phoneNumber && (
-          <p className="text-red-500 text-sm mt-1">{errors.phoneNumber.message}</p>
+          <p className="text-red-500 text-sm mt-1">
+            {errors.phoneNumber.message}
+          </p>
         )}
       </div>
 

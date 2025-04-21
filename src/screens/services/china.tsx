@@ -2,6 +2,7 @@ import Image from "next/image";
 import Truck from "@/assets/icons/truck.svg";
 import Calendar from "@/assets/icons/calendar-days.svg";
 import Shield from "@/assets/icons/shield-check.svg";
+import Link from "next/link";
 
 const ChinaData = [
   {
@@ -32,7 +33,10 @@ const ChinaCard = ({ ...items }) => {
         {items.name}
       </p>
       <p className="text-[#878787]">{items.content}</p>
-      <div className="mt-4 flex justify-between items-center">
+      <Link
+        href="/?link=leave-a-request"
+        className="mt-4 flex justify-between items-center"
+      >
         <p className="text-[#1342DD]">Оформить заявку</p>
         <div className="rounded-full hover:scale-105 transition-all duration-300 hover:bg-gray-100 cursor-pointer">
           <Image
@@ -43,14 +47,14 @@ const ChinaCard = ({ ...items }) => {
             priority={true}
           />
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
 
 export const China = () => {
   return (
-    <div className="bg-[#F8F8F8] py-16 px-8">
+    <div id="china" className="bg-[#F8F8F8] py-16 px-8">
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between">
           <div className="flex flex-col gap-2">

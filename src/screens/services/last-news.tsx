@@ -1,9 +1,10 @@
 "use client";
 
-import { libNews } from "@/lib/news";
+import { scrollToId } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 type NewsItem = {
   id: number;
@@ -21,7 +22,6 @@ const NewsCard = ({
   imagePath,
 }: NewsItem) => {
   const path = `https://rosscargo.kg/api/uploads/${imagePath}`;
-  console.log(path);
   return (
     <div className="w-full bg-white rounded-[30px] p-[10px]">
       <div>
@@ -37,12 +37,12 @@ const NewsCard = ({
         {header_title}
       </p>
       <p className="text-[#878787]">{header_body}</p>
-      <div className="mt-4 flex justify-between items-center">
-        <p className="text-[#1342DD]">Оформить заявку</p>
-        <Link
-          href={`/news/${id}`}
-          className="rounded-full hover:scale-105 transition-all duration-300 hover:bg-gray-100 cursor-pointer"
-        >
+      <Link
+        href={`/news/${id}`}
+        className="mt-4 flex justify-between items-center"
+      >
+        <p className="text-[#1342DD]">перейти</p>
+        <div className="rounded-full hover:scale-105 transition-all duration-300 hover:bg-gray-100 cursor-pointer">
           <Image
             width={30}
             height={30}
@@ -50,21 +50,28 @@ const NewsCard = ({
             alt="arrow"
             priority={true}
           />
-        </Link>
-      </div>
+        </div>
+      </Link>
     </div>
   );
 };
 
 export const LastNews = () => {
   const [news, setNews] = useState([]);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const link = searchParams.get("link");
+    if (link) {
+      setTimeout(() => scrollToId(link), 300);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch("https://rosscargo.kg/api/services");
         const data = await response.json();
-        console.log(data, "data");
         setNews(data);
       } catch (error) {
         console.error("Ошибка при получении данных:", error);

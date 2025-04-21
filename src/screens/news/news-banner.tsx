@@ -48,7 +48,7 @@ export const NewsBanner = () => {
         </div>
       </div>
       <video
-        className=" w-full h-full object-cover z-0 bg-red-200"
+        className=" w-full h-full object-cover z-0"
         src="/5598972-uhd_3840_2160_30fps.mp4"
         autoPlay
         muted
