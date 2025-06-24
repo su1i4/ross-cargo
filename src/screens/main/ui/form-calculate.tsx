@@ -214,9 +214,10 @@ export const ShippingCalculator = () => {
 
   return (
     <div className="w-full mx-auto">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 sm:space-y-4">
+        {/* From City */}
         <div>
-          <label className="block text-sm font-medium mb-1">Откуда</label>
+          <label className="block text-sm font-medium mb-1 text-gray-700">Откуда</label>
           <Controller
             name="cityFromId"
             control={control}
@@ -226,7 +227,7 @@ export const ShippingCalculator = () => {
                 onValueChange={(value) => field.onChange(Number(value))}
                 value={field.value > 0 ? field.value.toString() : undefined}
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full h-10 sm:h-11">
                   <SelectValue placeholder="Выберите город" />
                 </SelectTrigger>
                 <SelectContent>
@@ -242,13 +243,13 @@ export const ShippingCalculator = () => {
             )}
           />
           {errors.cityFromId && (
-            <p className="text-red-500 text-sm mt-1">{errors.cityFromId.message}</p>
+            <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.cityFromId.message}</p>
           )}
         </div>
 
         {/* To City */}
         <div>
-          <label className="block text-sm font-medium mb-1">Куда</label>
+          <label className="block text-sm font-medium mb-1 text-gray-700">Куда</label>
           <Controller
             name="cityToId"
             control={control}
@@ -258,7 +259,7 @@ export const ShippingCalculator = () => {
                 onValueChange={(value) => field.onChange(Number(value))}
                 value={field.value > 0 ? field.value.toString() : undefined}
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full h-10 sm:h-11">
                   <SelectValue placeholder="Выберите город" />
                 </SelectTrigger>
                 <SelectContent>
@@ -274,13 +275,13 @@ export const ShippingCalculator = () => {
             )}
           />
           {errors.cityToId && (
-            <p className="text-red-500 text-sm mt-1">{errors.cityToId.message}</p>
+            <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.cityToId.message}</p>
           )}
         </div>
 
         {/* Parcel Type */}
         <div>
-          <label className="block text-sm font-medium mb-1">Тип товара</label>
+          <label className="block text-sm font-medium mb-1 text-gray-700">Тип товара</label>
           <Controller
             name="parcelTypeId"
             control={control}
@@ -290,7 +291,7 @@ export const ShippingCalculator = () => {
                 onValueChange={(value) => field.onChange(Number(value))}
                 value={field.value > 0 ? field.value.toString() : undefined}
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full h-10 sm:h-11">
                   <SelectValue placeholder="Выберите тип товара" />
                 </SelectTrigger>
                 <SelectContent>
@@ -306,13 +307,13 @@ export const ShippingCalculator = () => {
             )}
           />
           {errors.parcelTypeId && (
-            <p className="text-red-500 text-sm mt-1">{errors.parcelTypeId.message}</p>
+            <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.parcelTypeId.message}</p>
           )}
         </div>
 
         {/* Weight */}
         <div>
-          <label className="block text-sm font-medium mb-1">Вес (кг)</label>
+          <label className="block text-sm font-medium mb-1 text-gray-700">Вес (кг)</label>
           <Input
             type="number"
             placeholder="Введите вес"
@@ -320,10 +321,10 @@ export const ShippingCalculator = () => {
               required: "Укажите вес",
               min: { value: 1, message: "Вес должен быть больше 0" },
             })}
-            className={`${errors.weight ? "border-red-500" : ""}`}
+            className={`h-10 sm:h-11 ${errors.weight ? "border-red-500" : ""}`}
           />
           {errors.weight && (
-            <p className="text-red-500 text-sm mt-1">{errors.weight.message}</p>
+            <p className="text-red-500 text-xs sm:text-sm mt-1">{errors.weight.message}</p>
           )}
         </div>
 
@@ -331,22 +332,22 @@ export const ShippingCalculator = () => {
         <Button
           type="submit"
           disabled={isCalculating}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+          className="w-full h-11 sm:h-12 bg-[var(--ross)] hover:bg-[var(--ross)] text-white font-semibold mt-4 sm:mt-6"
         >
-          {isCalculating ? "Расчет..." : "Рассчитать стоимость"}
+          {isCalculating ? "Расчет..." : "РАССЧИТАТЬ СТОИМОСТЬ"}
         </Button>
       </form>
 
       {/* Result Display */}
       {price !== null && !error && (
-        <div className="mt-4 p-4 bg-green-100 border border-green-300 rounded-md">
-          <p className="text-center font-bold">Стоимость доставки: {price} руб.</p>
+        <div className="mt-4 p-3 sm:p-4 bg-green-100 border border-green-300 rounded-md">
+          <p className="text-center font-bold text-sm sm:text-base">Стоимость доставки: {price} руб.</p>
         </div>
       )}
 
       {error && (
-        <div className="mt-4 p-4 bg-red-100 border border-red-300 rounded-md">
-          <p className="text-center text-red-700">{error}</p>
+        <div className="mt-4 p-3 sm:p-4 bg-red-100 border border-red-300 rounded-md">
+          <p className="text-center text-red-700 text-sm sm:text-base">{error}</p>
         </div>
       )}
     </div>

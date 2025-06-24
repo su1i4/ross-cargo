@@ -14,3 +14,4 @@ export const scrollToId = (
     element.scrollIntoView({ behavior: "smooth", block: position || "center" });
   }
 };
+
