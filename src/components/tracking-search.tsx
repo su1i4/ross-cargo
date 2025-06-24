@@ -195,8 +195,8 @@ export const TrackingSearch = () => {
               № {trackingResult.invoice_number}
             </h3>
             <p className="text-sm text-gray-600">
-              {trackingResult?.employee?.under_branch?.address}{" "}
-              {trackingResult?.destination?.name} — Алматы
+            {trackingResult?.employee?.under_branch?.branch?.name}, {trackingResult?.employee?.under_branch?.address}-{" "}
+              {trackingResult?.destination?.name}
             </p>
           </div>
           <div className="flex items-center gap-1 text-green-600">
@@ -349,8 +349,7 @@ export const TrackingSearch = () => {
             );
           })}
         </div>
-
-        {/* Информация о получателе */}
+{/* 
         <div className="mt-6 pt-6 border-t">
           <div className="flex justify-between items-start">
             <div>
@@ -358,12 +357,12 @@ export const TrackingSearch = () => {
               <p className="text-sm text-gray-600">
                 {trackingResult?.recipient?.name}
               </p>
-              {/* <p className="text-sm text-gray-600">Адрес пункта выдачи СДЭК</p>
+              <p className="text-sm text-gray-600">Адрес пункта выдачи СДЭК</p>
               <p className="text-sm text-gray-600">
                 пр-т. Райымбека батыра, 486Б
               </p>
               <p className="text-sm text-gray-600">Срок хранения</p>
-              <p className="text-sm text-gray-600">20.06.2025</p> */}
+              <p className="text-sm text-gray-600">20.06.2025</p>
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-600">
@@ -371,7 +370,7 @@ export const TrackingSearch = () => {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   };
