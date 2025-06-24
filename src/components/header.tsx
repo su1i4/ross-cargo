@@ -7,9 +7,28 @@ import { links, linksName } from "@/lib/links";
 import Link from "next/link";
 import { Menu, X } from "lucide-react"; // Иконки меню
 import { scrollToId } from "@/lib/utils";
+import { useRouter, usePathname } from "next/navigation";
 
 export const Header = ({ textColor = "text-[#030115]" }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleScrollToCalculator = () => {
+    if (pathname === "/") {
+      // Если уже на главной странице, добавляем параметр и скроллим
+      router.push("/?link=calculator");
+      setTimeout(() => {
+        scrollToId("calculator");
+      }, 100);
+    } else {
+      // Если на другой странице, переходим на главную и скроллим после загрузки
+      router.push("/?link=calculator");
+      setTimeout(() => {
+        scrollToId("calculator");
+      }, 100);
+    }
+  };
 
   return (
     <header className="w-full border-b border-[#eee]">
@@ -32,11 +51,12 @@ export const Header = ({ textColor = "text-[#030115]" }) => {
         </nav>
 
         <div className="hidden lg:block">
-          <Link href="/?link=leave-a-request">
-            <Button className="w-full bg-[#1342DD] hover:bg-[#1342DD90] active:scale-95 transition-all duration-300 cursor-pointer">
-              Оставить заявку
-            </Button>
-          </Link>
+          <Button
+            onClick={handleScrollToCalculator}
+            className="w-full bg-[#1342DD] hover:bg-[#1342DD90] active:scale-95 transition-all duration-300 cursor-pointer"
+          >
+            Отследить посылку
+          </Button>
         </div>
 
         {/* Mobile menu toggle */}
@@ -65,14 +85,15 @@ export const Header = ({ textColor = "text-[#030115]" }) => {
           </nav>
 
           <div className="mt-4">
-            <Link href="/?link=leave-a-reauest">
-              <Button
-                onClick={() => scrollToId("leave-a-request")}
-                className="w-full bg-[#1342DD] hover:bg-[#1342DD80] active:scale-95 transition-all duration-300 cursor"
-              >
-                Оставить заявку
-              </Button>
-            </Link>
+            <Button
+              onClick={() => {
+                handleScrollToCalculator();
+                setIsMenuOpen(false);
+              }}
+              className="w-full bg-[#1342DD] hover:bg-[#1342DD80] active:scale-95 transition-all duration-300 cursor"
+            >
+              Отследить посылку
+            </Button>
           </div>
         </div>
       )}

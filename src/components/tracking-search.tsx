@@ -137,7 +137,7 @@ export const TrackingSearch = () => {
 
     try {
       const response = await fetch(
-        `http://192.168.1.192:5002/api/goods-processing/find-good/${encodeURIComponent(
+        `https://rosscargo.kg/api/goods-processing/find-good/${encodeURIComponent(
           data.trackingNumber
         )}`,
         {
@@ -386,22 +386,24 @@ export const TrackingSearch = () => {
             htmlFor="trackingNumber"
             className="text-sm font-medium text-gray-700"
           >
-            Номер отправления
+            Номер накладной
           </label>
           <div className="relative">
             <Package className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
               {...register("trackingNumber", {
-                required: "Введите номер отправления",
+                required: "Введите номер накладной",
                 minLength: {
                   value: 5,
                   message: "Номер должен содержать минимум 5 символов",
                 },
               })}
               type="text"
-              placeholder="Введите номер отправления"
+              placeholder="Введите номер накладной"
               className="pl-10 h-10 sm:h-11 text-sm sm:text-base"
               disabled={isSearching}
+              minLength={12}
+              maxLength={12}
             />
           </div>
           {errors.trackingNumber && (

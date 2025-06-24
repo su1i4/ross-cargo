@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Calculator, MapPin } from "lucide-react";
 import { ShippingCalculator } from "@/screens/main/ui/form-calculate";
 import { TrackingSearch } from "./tracking-search";
@@ -9,6 +10,14 @@ type TabType = "calculator" | "tracking";
 
 export const TabsCalculator = () => {
   const [activeTab, setActiveTab] = useState<TabType>("calculator");
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const linkParam = searchParams.get("link");
+    if (linkParam === "calculator") {
+      setActiveTab("tracking");
+    }
+  }, [searchParams]);
 
   const tabs = [
     {
@@ -24,7 +33,7 @@ export const TabsCalculator = () => {
   ];
 
   return (
-    <div className="bg-white rounded-[24px] p-3 lg:p-6 w-full shadow-lg flex flex-col gap-5 mt-8">
+    <div id="calculator" className="bg-white rounded-[24px] p-3 lg:p-6 w-full shadow-lg flex flex-col gap-5 mt-8 min-h-[500px]">
       <div className="flex bg-gray-100 rounded-lg overflow-hidden p-1">
         {tabs.map((tab) => {
           const Icon = tab.icon;
@@ -65,17 +74,12 @@ export const TabsCalculator = () => {
               Отследить посылку
             </h2>
             <p className="text-[#030115] text-base mb-5">
-              Введите номер отправления для отслеживания
+              Введите номер накладной для отслеживания
             </p>
             <TrackingSearch />
           </div>
         )}
       </div>
-
-      <p className="text-[#CBCBCB] text-[13px] leading-5">
-        Нажимая кнопку рассчитать стоимость вы соглашаетесь с обработкой
-        персональных данных, политикой конфиденциальности и публичной офертой
-      </p>
     </div>
   );
 };
