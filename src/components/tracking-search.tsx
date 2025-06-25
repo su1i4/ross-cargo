@@ -139,7 +139,7 @@ export const TrackingSearch = () => {
 
     try {
       const response = await fetch(
-        `https://rosscargo.kg/api/goods-processing/find-good/${encodeURIComponent(
+        `https://systemcargo.ru/api/goods-processing/find-good/${encodeURIComponent(
           data.trackingNumber
         )}`,
         {
