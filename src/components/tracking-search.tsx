@@ -5,6 +5,12 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Package, Truck, Warehouse, CheckCircle, Edit } from "lucide-react";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 type TrackingFormInputs = {
   trackingNumber: string;
@@ -107,12 +113,7 @@ const getStatusColor = (status: string, isActive: boolean) => {
 };
 
 const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("ru-RU", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  return dayjs(dateString).utc().format("DD.MM.YYYY HH:mm");
 };
 
 export const TrackingSearch = () => {
@@ -122,6 +123,7 @@ export const TrackingSearch = () => {
   );
   const [error, setError] = useState<string | null>(null);
   const [showReadyDetails, setShowReadyDetails] = useState(false);
+  const [showInTransitDetails, setShowInTransitDetails] = useState(false);
 
   const {
     register,
@@ -182,9 +184,7 @@ export const TrackingSearch = () => {
     // Получаем случайный сервис для истории
     const randomService =
       trackingResult.services && trackingResult.services.length > 0
-        ? trackingResult.services[
-            Math.floor(Math.random() * trackingResult.services.length)
-          ]
+        ? trackingResult.services[0]
         : null;
 
     return (
@@ -195,7 +195,8 @@ export const TrackingSearch = () => {
               № {trackingResult.invoice_number}
             </h3>
             <p className="text-sm text-gray-600">
-            {trackingResult?.employee?.under_branch?.branch?.name}, {trackingResult?.employee?.under_branch?.address}-{" "}
+              {trackingResult?.employee?.under_branch?.branch?.name},{" "}
+              {trackingResult?.employee?.under_branch?.address}-{" "}
               {trackingResult?.destination?.name}
             </p>
           </div>
@@ -217,7 +218,12 @@ export const TrackingSearch = () => {
                 {!isLast && (
                   <div
                     className={`absolute left-5 top-8 w-0.5 h-16 ${
-                      isActive ? getStatusColor(status.status, isActive).replace('bg-', 'bg-') : "bg-gray-200"
+                      isActive
+                        ? getStatusColor(status.status, isActive).replace(
+                            "bg-",
+                            "bg-"
+                          )
+                        : "bg-gray-200"
                     }`}
                   />
                 )}
@@ -225,7 +231,10 @@ export const TrackingSearch = () => {
                 <div className="flex items-start gap-4">
                   {/* Иконка статуса */}
                   <div
-                    className={`relative flex-shrink-0 w-10 h-10 rounded-full border-2 flex items-center justify-center ${getStatusColor(status.status, isActive)}`}
+                    className={`relative flex-shrink-0 w-10 h-10 rounded-full border-2 flex items-center justify-center ${getStatusColor(
+                      status.status,
+                      isActive
+                    )}`}
                   >
                     <StatusIcon className={`h-5 w-5 text-white`} />
                   </div>
@@ -241,17 +250,27 @@ export const TrackingSearch = () => {
                         >
                           {status.status}
                         </h4>
-                        {status.status === "В пути" && isActive && (
-                          <p className="text-sm text-[var(--ross)] mt-1 cursor-pointer hover:underline">
-                            Подробнее ↓
+                        {status.status === "В пути" && 
+                          isActive && 
+                          randomService && 
+                          randomService.shipment && 
+                          randomService.shipment.history && 
+                          randomService.shipment.history.length > 0 && (
+                          <p 
+                            className="text-sm text-[var(--ross)] mt-1 cursor-pointer hover:underline"
+                            onClick={() => setShowInTransitDetails(!showInTransitDetails)}
+                          >
+                            Подробнее {showInTransitDetails ? "↑" : "↓"}
                           </p>
                         )}
                         {status.status === "Готов к выдаче" && isActive && (
-                          <p 
+                          <p
                             className="text-sm text-[var(--ross)] mt-1 cursor-pointer hover:underline"
-                            onClick={() => setShowReadyDetails(!showReadyDetails)}
+                            onClick={() =>
+                              setShowReadyDetails(!showReadyDetails)
+                            }
                           >
-                            Подробнее {showReadyDetails ? '↑' : '↓'}
+                            Подробнее {showReadyDetails ? "↑" : "↓"}
                           </p>
                         )}
                       </div>
@@ -268,78 +287,61 @@ export const TrackingSearch = () => {
                     {status.status === "В пути" &&
                       isActive &&
                       randomService &&
-                      randomService.shipment && (
-                        <div className={`mt-4 space-y-3 border-l-4 ${getStatusColor(status.status, isActive).replace('bg-', 'border-')} pl-5`}>
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">
-                              Москва
-                            </p>
-                            <p className="text-sm text-gray-600">
-                              Принят на доставку
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              {formatDate(status.createdAt)}
-                            </p>
+                      randomService.shipment &&
+                      randomService.shipment.history &&
+                      randomService.shipment.history.length > 0 && (
+                        <div
+                          className={`mt-4 overflow-hidden transition-all duration-500 ease-in-out ${
+                            showInTransitDetails
+                              ? "max-h-96 opacity-100"
+                              : "max-h-0 opacity-0"
+                          }`}
+                        >
+                          <div
+                            className={`space-y-3 border-l-4 ${getStatusColor(
+                              status.status,
+                              isActive
+                            ).replace("bg-", "border-")} pl-5`}
+                          >
+                            {randomService.shipment.history.map(
+                              (historyItem, historyIndex) => (
+                                <div key={historyItem.id}>
+                                  <p className="text-sm text-gray-600">
+                                    {historyItem.message}
+                                  </p>
+                                  <p className="text-xs text-gray-500">
+                                    {formatDate(historyItem.created_at)}
+                                  </p>
+                                </div>
+                              )
+                            )}
                           </div>
-
-                          {randomService.shipment.history.map(
-                            (historyItem, historyIndex) => (
-                              <div key={historyItem.id}>
-                                <p className="text-sm text-gray-600">
-                                  {historyItem.message}
-                                </p>
-                                <p className="text-xs text-gray-500">
-                                  {formatDate(historyItem.created_at)}
-                                </p>
-                              </div>
-                            )
-                          )}
                         </div>
                       )}
 
                     {/* Дополнительная информация для статуса "Готов к выдаче" */}
                     {status.status === "Готов к выдаче" && isActive && (
-                      <div 
+                      <div
                         className={`mt-4 overflow-hidden transition-all duration-500 ease-in-out ${
-                          showReadyDetails 
-                            ? 'max-h-96 opacity-100' 
-                            : 'max-h-0 opacity-0'
+                          showReadyDetails
+                            ? "max-h-96 opacity-100"
+                            : "max-h-0 opacity-0"
                         }`}
                       >
-                        <div className={`space-y-3 border-l-4 ${getStatusColor(status.status, isActive).replace('bg-', 'border-')} pl-4`}>
+                        <div
+                          className={`space-y-3 border-l-4 ${getStatusColor(
+                            status.status,
+                            isActive
+                          ).replace("bg-", "border-")} pl-4`}
+                        >
                           <div>
                             <p className="text-sm font-medium text-gray-900">
-                              {trackingResult?.destination?.name || 'Алматы'}
-                            </p>
-                            <p className="text-sm text-gray-600">
-                              Поступил. Заберите заказ
+                              {trackingResult?.destination?.name || "Алматы"}
                             </p>
                             <p className="text-xs text-gray-500">
                               {formatDate(status.createdAt)}
                             </p>
                           </div>
-                          
-                          {trackingResult?.employee?.under_branch?.address && (
-                            <div>
-                              <p className="text-sm font-medium text-gray-900">
-                                Адрес пункта выдачи
-                              </p>
-                              <p className="text-sm text-gray-600">
-                                {trackingResult.employee.under_branch.address}
-                              </p>
-                            </div>
-                          )}
-                          
-                          {trackingResult?.employee?.under_branch?.branch?.name && (
-                            <div>
-                              <p className="text-sm font-medium text-gray-900">
-                                Филиал
-                              </p>
-                              <p className="text-sm text-gray-600">
-                                {trackingResult.employee.under_branch.branch.name}
-                              </p>
-                            </div>
-                          )}
                         </div>
                       </div>
                     )}
@@ -349,7 +351,7 @@ export const TrackingSearch = () => {
             );
           })}
         </div>
-{/* 
+        {/* 
         <div className="mt-6 pt-6 border-t">
           <div className="flex justify-between items-start">
             <div>
