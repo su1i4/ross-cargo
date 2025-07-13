@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Calculator, MapPin } from "lucide-react";
 import { ShippingCalculator } from "@/screens/main/ui/form-calculate";
 import { TrackingSearch } from "./tracking-search";
+import { scrollToId } from "@/lib/utils";
 
 type TabType = "calculator" | "tracking";
 
@@ -14,8 +15,18 @@ export const TabsCalculator = () => {
 
   useEffect(() => {
     const linkParam = searchParams.get("link");
+    const trackingNumber = searchParams.get("trackingNumber");
+    
     if (linkParam === "calculator") {
       setActiveTab("tracking");
+    } else if (trackingNumber) {
+      // Если есть номер накладной, переключаемся на вкладку отслеживания
+      setActiveTab("tracking");
+      
+      // Скролл к компоненту через небольшую задержку
+      setTimeout(() => {
+        scrollToId("calculator");
+      }, 200);
     }
   }, [searchParams]);
 

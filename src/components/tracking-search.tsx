@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useSearchParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Package, Truck, Warehouse, CheckCircle, Edit } from "lucide-react";
+import { scrollToId } from "@/lib/utils";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -117,6 +119,7 @@ const formatDate = (dateString: string) => {
 };
 
 export const TrackingSearch = () => {
+  const searchParams = useSearchParams();
   const [isSearching, setIsSearching] = useState(false);
   const [trackingResult, setTrackingResult] = useState<TrackingResult | null>(
     null
@@ -130,9 +133,11 @@ export const TrackingSearch = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm<TrackingFormInputs>();
 
-  const onSubmit = async (data: TrackingFormInputs) => {
+  // Функция для выполнения поиска
+  const performSearch = async (trackingNumber: string) => {
     setIsSearching(true);
     setError(null);
     setTrackingResult(null);
@@ -140,7 +145,7 @@ export const TrackingSearch = () => {
     try {
       const response = await fetch(
         `https://systemcargo.ru/api/goods-processing/find-good/${encodeURIComponent(
-          data.trackingNumber
+          trackingNumber
         )}`,
         {
           method: "GET",
@@ -159,6 +164,13 @@ export const TrackingSearch = () => {
 
       const result = await response.json();
       setTrackingResult(result);
+      
+      // Скролл к результату после успешного поиска (только если пришли с QR-кода)
+      if (searchParams.get("trackingNumber")) {
+        setTimeout(() => {
+          scrollToId("calculator");
+        }, 500);
+      }
     } catch (error) {
       console.error("Error tracking package:", error);
       setError(
@@ -169,6 +181,24 @@ export const TrackingSearch = () => {
     } finally {
       setIsSearching(false);
     }
+  };
+
+  // Автоматический поиск при получении номера накладной из URL
+  useEffect(() => {
+    const trackingNumber = searchParams.get("trackingNumber");
+    if (trackingNumber) {
+      setValue("trackingNumber", trackingNumber);
+      performSearch(trackingNumber);
+      
+      // Первоначальный скролл к компоненту отслеживания
+      setTimeout(() => {
+        scrollToId("calculator");
+      }, 300);
+    }
+  }, [searchParams, setValue]);
+
+  const onSubmit = async (data: TrackingFormInputs) => {
+    await performSearch(data.trackingNumber);
   };
 
   const renderTrackingTimeline = () => {
