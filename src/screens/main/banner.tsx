@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { Slider } from "./slider";
 
 export const Banner = () => {
   return (

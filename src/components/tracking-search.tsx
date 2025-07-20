@@ -132,11 +132,9 @@ export const TrackingSearch = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     setValue,
   } = useForm<TrackingFormInputs>();
 
-  // Функция для выполнения поиска
   const performSearch = async (trackingNumber: string) => {
     setIsSearching(true);
     setError(null);
@@ -165,7 +163,6 @@ export const TrackingSearch = () => {
       const result = await response.json();
       setTrackingResult(result);
       
-      // Скролл к результату после успешного поиска (только если пришли с QR-кода)
       if (searchParams.get("trackingNumber")) {
         setTimeout(() => {
           scrollToId("calculator");
@@ -183,19 +180,17 @@ export const TrackingSearch = () => {
     }
   };
 
-  // Автоматический поиск при получении номера накладной из URL
   useEffect(() => {
     const trackingNumber = searchParams.get("trackingNumber");
     if (trackingNumber) {
       setValue("trackingNumber", trackingNumber);
       performSearch(trackingNumber);
       
-      // Первоначальный скролл к компоненту отслеживания
       setTimeout(() => {
         scrollToId("calculator");
       }, 300);
     }
-  }, [searchParams, setValue]);
+  }, [searchParams, setValue, performSearch]);
 
   const onSubmit = async (data: TrackingFormInputs) => {
     await performSearch(data.trackingNumber);
@@ -211,7 +206,6 @@ export const TrackingSearch = () => {
 
     const currentStatusIndex = statuses.length - 1;
 
-    // Получаем случайный сервис для истории
     const randomService =
       trackingResult.services && trackingResult.services.length > 0
         ? trackingResult.services[0]
@@ -244,7 +238,6 @@ export const TrackingSearch = () => {
 
             return (
               <div key={status.id} className="relative">
-                {/* Вертикальная линия */}
                 {!isLast && (
                   <div
                     className={`absolute left-5 top-8 w-0.5 h-16 ${
@@ -259,7 +252,6 @@ export const TrackingSearch = () => {
                 )}
 
                 <div className="flex items-start gap-4">
-                  {/* Иконка статуса */}
                   <div
                     className={`relative flex-shrink-0 w-10 h-10 rounded-full border-2 flex items-center justify-center ${getStatusColor(
                       status.status,
@@ -269,7 +261,6 @@ export const TrackingSearch = () => {
                     <StatusIcon className={`h-5 w-5 text-white`} />
                   </div>
 
-                  {/* Контент статуса */}
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-start">
                       <div>
@@ -313,7 +304,6 @@ export const TrackingSearch = () => {
                       </span>
                     </div>
 
-                    {/* Дополнительная информация для статуса "В пути" */}
                     {status.status === "В пути" &&
                       isActive &&
                       randomService &&
@@ -334,7 +324,7 @@ export const TrackingSearch = () => {
                             ).replace("bg-", "border-")} pl-5`}
                           >
                             {randomService.shipment.history.map(
-                              (historyItem, historyIndex) => (
+                              (historyItem) => (
                                 <div key={historyItem.id}>
                                   <p className="text-sm text-gray-600">
                                     {historyItem.message}
@@ -349,7 +339,6 @@ export const TrackingSearch = () => {
                         </div>
                       )}
 
-                    {/* Дополнительная информация для статуса "Готов к выдаче" */}
                     {status.status === "Готов к выдаче" && isActive && (
                       <div
                         className={`mt-4 overflow-hidden transition-all duration-500 ease-in-out ${
@@ -381,28 +370,6 @@ export const TrackingSearch = () => {
             );
           })}
         </div>
-        {/* 
-        <div className="mt-6 pt-6 border-t">
-          <div className="flex justify-between items-start">
-            <div>
-              <p className="text-sm font-medium text-gray-900">Получатель</p>
-              <p className="text-sm text-gray-600">
-                {trackingResult?.recipient?.name}
-              </p>
-              <p className="text-sm text-gray-600">Адрес пункта выдачи СДЭК</p>
-              <p className="text-sm text-gray-600">
-                пр-т. Райымбека батыра, 486Б
-              </p>
-              <p className="text-sm text-gray-600">Срок хранения</p>
-              <p className="text-sm text-gray-600">20.06.2025</p>
-            </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-600">
-                {formatDate(trackingResult.updated_at)}
-              </p>
-            </div>
-          </div>
-        </div> */}
       </div>
     );
   };

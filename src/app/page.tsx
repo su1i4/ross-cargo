@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Header } from "@/components/header";
 import { Banner } from "@/screens/main/banner";
 import { Calculator } from "@/screens/main/calculator";
@@ -11,15 +12,17 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="container md:px-8 px-2">
-        <Banner />
-        <Middle />
-        <Calculator />
-        <Questions />
-        <Feedbacks />
-        <Consultation />
-        <Map />
-      </main>
+      <Suspense>
+        <main className="container md:px-8 px-2">
+          <Banner />
+          <Middle />
+          <Calculator />
+          <Questions />
+          <Feedbacks />
+          <Consultation />
+          <Map />
+        </main>
+      </Suspense>
     </>
   );
 }

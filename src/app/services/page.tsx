@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Questions } from "@/screens/main/questions";
 import { Buiseness } from "@/screens/services/buiseness";
 import { China } from "@/screens/services/china";
@@ -30,20 +31,22 @@ export const metadata: Metadata = {
 
 export default function Services() {
   return (
-    <main className="w-ful bg-[#F8F8F8]">
-      <ServiceBanner />
-      <Buiseness />
-      <ServiceDescription />
-      <LastNews />
-      <Integration />
-      <div className="container mx-auto">
-        <div className="px-4">
-          <Questions />
+    <Suspense fallback={null}>
+      <main className="w-ful bg-[#F8F8F8]">
+        <ServiceBanner />
+        <Buiseness />
+        <ServiceDescription />
+        <LastNews />
+        <Integration />
+        <div className="container mx-auto">
+          <div className="px-4">
+            <Questions />
+          </div>
         </div>
-      </div>
-      <Fullfilment />
-      <ReverseIntegration />
-      <China />
-    </main>
+        <Fullfilment />
+        <ReverseIntegration />
+        <China />
+      </main>
+    </Suspense>
   );
 }

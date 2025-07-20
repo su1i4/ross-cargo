@@ -39,7 +39,6 @@ const NewsCard = ({
   date,
   name,
   content,
-  fullContent,
 }: {
   date: string;
   name: string;
@@ -59,6 +58,8 @@ export const NewsSlider = () => {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
+
+  console.log(current, count);
 
   React.useEffect(() => {
     if (!api) return;

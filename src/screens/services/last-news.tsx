@@ -18,7 +18,6 @@ const NewsCard = ({
   id,
   header_title,
   header_body,
-  description,
   imagePath,
 }: NewsItem) => {
   const path = `https://rosscargo.kg/api/uploads/${imagePath}`;

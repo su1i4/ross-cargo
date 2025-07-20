@@ -18,7 +18,6 @@ const YandexMap = () => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   
-  // Define custom marker only once outside of render cycle
   const customMarkerURL = "data:image/svg+xml;base64," +
     btoa(`
       <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +25,6 @@ const YandexMap = () => {
       </svg>
     `);
 
-  // Location data
   const locations = [
     {
       coordinates: [42.943066, 74.620625],
@@ -45,16 +43,16 @@ const YandexMap = () => {
     }
   ];
 
+  console.log(mapLoaded);
+
   const loadYandexMapsScript = () => {
     return new Promise<void>((resolve, reject) => {
-      // Check if script is already loaded
       if (window.ymaps) {
         setMapLoaded(true);
         resolve();
         return;
       }
 
-      // Create script element
       const script = document.createElement("script");
       script.src = "https://api-maps.yandex.ru/2.1/?apikey=ef84f2a7-333d-4b33-b3d5-5263cb19fb71&lang=ru_RU";
       script.type = "text/javascript";
@@ -79,14 +77,12 @@ const YandexMap = () => {
 
     window.ymaps.ready(() => {
       try {
-        // Create map
         const map = new window.ymaps.Map(mapRef.current, {
           center: [42.875652, 74.622943],
           zoom: 12,
           controls: []
         });
 
-        // Add placemarks for each location
         locations.forEach(location => {
           const placemark = new window.ymaps.Placemark(
             location.coordinates,
@@ -129,7 +125,7 @@ const YandexMap = () => {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [initMap]);
 
   return (
     <div className="relative w-full h-[450px] sm:h-[600px] md:h-[700px] rounded-[20px] overflow-hidden">

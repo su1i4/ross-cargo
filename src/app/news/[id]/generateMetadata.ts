@@ -5,7 +5,6 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  // Пытаемся получить данные новости
   try {
     const response = await fetch(
       `https://rosscargo.kg/api/services/${params.id}`,

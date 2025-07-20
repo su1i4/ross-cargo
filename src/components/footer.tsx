@@ -1,5 +1,4 @@
 import { Logo } from "@/assets/icons/Logo";
-import { linksFooter, linksFooterName } from "@/lib/links";
 import { MdOutlineEmail } from "react-icons/md";
 import { BsGeoAlt } from "react-icons/bs";
 import { FiPhone } from "react-icons/fi";

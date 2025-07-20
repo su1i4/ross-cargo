@@ -15,7 +15,6 @@ import {
 import { useSearchParams } from "next/navigation";
 import { scrollToId } from "@/lib/utils";
 
-// Type definitions
 type City = {
   id: number;
   cityname: string;
@@ -44,11 +43,9 @@ type CalculateFormInputs = {
 const url = 'https://rosscargo.kg/api';
 
 export const ShippingCalculator = () => {
-  // States for data
   const [fromCities, setFromCities] = useState<City[]>([]);
   const [toCities, setToCities] = useState<City[]>([]);
   const [parcelTypes, setParcelTypes] = useState<ParcelType[]>([]);
-  const [bagTypes, setBagTypes] = useState<BagType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isCalculating, setIsCalculating] = useState(false);
   const [price, setPrice] = useState<number | null>(null);
@@ -68,9 +65,7 @@ export const ShippingCalculator = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
     setValue,
-    watch,
   } = useForm<CalculateFormInputs>({
     defaultValues: {
       cityFromId: 0,
@@ -80,35 +75,27 @@ export const ShippingCalculator = () => {
     },
   });
 
-  // Fetch data on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
         setError(null);
 
-        // Fetch cities
         const citiesResponse = await fetch(`${url}/locations/cities`);
         if (!citiesResponse.ok) throw new Error("Failed to fetch cities");
         const citiesData: City[] = await citiesResponse.json();
         
-        // Split cities by type
         setFromCities(citiesData.filter(city => city.type === "From"));
         setToCities(citiesData.filter(city => city.type === "To"));
 
-        // Fetch parcel types
         const parcelTypesResponse = await fetch(`${url}/parcel-type`);
         if (!parcelTypesResponse.ok) throw new Error("Failed to fetch parcel types");
         const parcelTypesData: ParcelType[] = await parcelTypesResponse.json();
         setParcelTypes(parcelTypesData);
 
-        // Fetch bag types
         const bagsResponse = await fetch(`${url}/bags`);
         if (!bagsResponse.ok) throw new Error("Failed to fetch bag types");
-        const bagsData: BagType[] = await bagsResponse.json();
-        setBagTypes(bagsData);
 
-        // Set default values if data is available
         if (citiesData.length > 0) {
           const defaultFromCity = citiesData.find(city => city.type === "From");
           if (defaultFromCity) setValue("cityFromId", defaultFromCity.id);
@@ -152,24 +139,15 @@ export const ShippingCalculator = () => {
           { id: 6, name: "Бренд" }
         ];
         
-        const bagTypesData = [
-          { id: 1, title: "Маленький мешок", price: 60 },
-          { id: 2, title: "Большой мешок", price: 220 },
-          { id: 3, title: "Средний мешок", price: 200 },
-          { id: 4, title: "Мешок для рулона", price: 230 }
-        ];
-        
         setFromCities(citiesData.filter(city => city.type === "From"));
         setToCities(citiesData.filter(city => city.type === "To"));
         setParcelTypes(parcelTypesData);
-        setBagTypes(bagTypesData);
         
-        // Set default values
         setValue("cityFromId", 5);
         setValue("cityToId", 6);
         setValue("parcelTypeId", 1);
         
-        setError(null); // Clear error since we have fallback data
+        setError(null);
       } finally {
         setIsLoading(false);
       }
