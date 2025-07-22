@@ -190,7 +190,7 @@ export const TrackingSearch = () => {
         scrollToId("calculator");
       }, 300);
     }
-  }, [searchParams, setValue, performSearch]);
+  }, [searchParams, setValue]);
 
   const onSubmit = async (data: TrackingFormInputs) => {
     await performSearch(data.trackingNumber);
